@@ -38,12 +38,9 @@ router.get('/students/:id', async(req, res, next) => {
 
 router.delete('/students/:id', async(req, res, next) => {
   try {
-    await Campus.destroy({
-      where: {
-        id: req.params.id
-      }
-    });
-    res.sendStatus(204);
+    const student = await Student.findByPk(req.params.id)
+    await student.destroy()
+    res.sendStatus(200);
   } catch(err) {
     next(err);
   };
@@ -131,12 +128,18 @@ router.delete('/campuses/:id', async(req, res, next) => {
 
 router.put('/campuses/:id', async(req, res, next) => {
   try {
-    const campus = await Campus.findOne({
+    //find Campus
+    let campus = await Campus.findOne({
       where: {
         id: req.params.id
       },
       include: [ { model: Student } ]
     });
+    //update campus
+    await campus.update(req.body)
+    //get campus again
+    campus = await Campus.findByPk(req.params.id)
+    
     res.status(200).send(campus);
   } catch(err) {
     next(err);

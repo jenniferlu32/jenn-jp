@@ -31,7 +31,7 @@ const _deleteCampus = (campusId) => {
 const _editCampus = (campus) => {
   return {
     type: EDIT_CAMPUS,
-    payload: campus
+    campus
   };
 };
 
@@ -59,8 +59,9 @@ export const deleteCampus = (campusId) => {
 
 export const editCampus = (campus) => {
   return async(dispatch) => {
+    // console.log('STORE campus-->', campus)
     const newCampus = (await axios.put(`/api/campuses/${campus.id}`, campus)).data;
-    console.log(newCampus)
+    // console.log(newCampus)
     dispatch(_editCampus(newCampus));
   };
 };
@@ -82,7 +83,7 @@ export default function campusReducer(state = [], action) {
     case DELETE_CAMPUS:
       return state.filter(campus => campus.id !== action.payload);
     case EDIT_CAMPUS:
-     return state.map(campus => campus.id === action.payload.id ? action.payload : campus);
+     return state.map(campus => campus.id === action.campus.id ? action.campus : campus);
     default:
       return state;
   };

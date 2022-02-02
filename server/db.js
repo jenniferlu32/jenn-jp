@@ -86,8 +86,13 @@ const syncAndSeed = async() => {
       return Campus.create({ name, address, description });
     }),
   );
-  moe.update({ campusId: nyu.id });
+  moe.campusId = nyu.id
+  await moe.save()
+
+  // moe.update({ campusId: nyu.id });
   lucy.update({ campusId: nyuDc.id });
+  await lucy.save()
+
   ethyl.update({ campusId: nyuLondon.id });
   larry.update({ campusId: nyu.id });
 };

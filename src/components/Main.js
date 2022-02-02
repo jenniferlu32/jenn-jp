@@ -12,7 +12,7 @@ import Student from './Student';
 
 //thunks
 import { getCampus, deleteCampus } from '../store/campuses';
-import { getStudents, deleteStudent } from '../store/students';
+import { getStudents } from '../store/students';
 
 class Main extends React.Component {
   constructor() {
@@ -31,7 +31,7 @@ class Main extends React.Component {
         <Route path='/' exact component={Home}></Route>
         <Route path='/campuses' exact component={() => <Campuses campuses={this.props.campuses} deleteCampus={this.props.deleteCampus}/>}></Route>
         <Route path={`/campuses/:id`} component={Campus}></Route>
-        <Route path='/students' exact component={() => <Students students={this.props.students} deleteStudent={this.props.deleteStudent} />}></Route>
+        <Route path='/students' exact component={Students} ></Route>
         <Route path='/students/:id' component={Student}></Route>
       </Router>
     );

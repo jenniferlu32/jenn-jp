@@ -24,7 +24,7 @@ class Campus extends React.Component {
   };
 
   render() {
-    const campus = this.props.campus;
+    const {campus } = this.props
     if (!campus) {
       return <h1>Loading</h1>
     } else {
@@ -46,17 +46,19 @@ class Campus extends React.Component {
             }) : <p>This campus has no students!</p>
           }
           </ul>
-          <EditCampus campus={campus} />
+          <EditCampus campus={campus}/>
         </div>
       )
     };
   };
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
+  // console.log('In Campus OwnProps--->', ownProps)
   const campusId = window.location.hash.slice(window.location.hash.length-1);
   return {
     campus: state.campuses.filter(campus => campus.id === campusId*1)[0],
+    ownProps,
   };
 };
 

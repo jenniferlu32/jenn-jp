@@ -21,10 +21,10 @@ const _addStudent = (student) => {
   };
 };
 
-const _deleteStudent = (studentId) => {
+const deleteStudent = (id) => {
   return {
     type: DELETE_STUDENT,
-    payload: studentId
+    id
   };
 };
 
@@ -50,10 +50,10 @@ export const addStudent = (student) => {
   };
 };
 
-export const deleteStudent = (studentId) => {
+export const _deleteStudent = (studentId) => {
   return async(dispatch) => {
     await axios.delete(`api/students/${studentId}`);
-    dispatch(_deleteStudent(studentId));
+    dispatch(deleteStudent(studentId));
   };
 };
 
@@ -80,7 +80,7 @@ export default function studentReducer(state = [], action) {
     case ADD_STUDENT:
       return [...state, action.payload];
     case DELETE_STUDENT:
-      return state.filter(student => student.id !== action.payload);
+      return state.filter(student => student.id !== action.id);
     case EDIT_STUDENT:
       return state.map(student => student.id === action.payload.id ? action.payload : student);
     default:
